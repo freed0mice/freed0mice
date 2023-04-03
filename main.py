@@ -36,6 +36,9 @@ class Mentor:
         else:
             return 'Ошибка'
 
+    def __repr__(self):
+        return f'Имя: {self.name}\nФамилия: {self.surname}'
+
 
 class Lecturer(Mentor):
     def __init__(self, name, surname):
@@ -43,7 +46,7 @@ class Lecturer(Mentor):
         self.grades = {}
 
     def __repr__(self):
-        return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {get_middle_marks(self.grades)}'
+        return f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {get_middle_marks(self.grades)}'
 
     def __eq__(self, other):
         return get_middle_marks(self.grades) == get_middle_marks(other.grades)
@@ -108,22 +111,52 @@ def get_middle_marks_lectures(lectures, course):
 
 # -----------------------------------------------------
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
+first_student = Student('Vadim', 'Legend', 'male')
+first_student.courses_in_progress += ['Python']
 
-ne_student = Student('My', 'Name', 'your_gender')
-ne_student.courses_in_progress += ['Python']
+second_student = Student('Alina', 'Legend', 'female')
+second_student.courses_in_progress += ['Python']
 
-cool_mentor = Mentor('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
+first_mentor = Mentor('Dima', 'Popov')
+first_mentor.courses_attached += ['Python']
 
-cool_lecturer = Lecturer('John', 'Boss')
-new_lecturer = Lecturer('my', 'bro')
-cool_lecturer.courses_attached += ['Python']
-new_lecturer.courses_attached += ['Python']
+second_mentor = Mentor('Sveta', 'Panova')
+second_mentor.courses_attached += ['Python']
 
-best_student.rate_hw(cool_lecturer, 'Python', 10)
+first_lecturer = Lecturer('Sonya', 'Shaman')
+first_lecturer.courses_attached += ['Python']
 
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(ne_student, 'Python', 5)
+second_lecturer = Lecturer('Yulia', 'Gagarina')
+second_lecturer.courses_attached += ['Python']
 
+first_reviewer = Reviewer('Dina', 'Faripova')
+
+second_reviewer = Reviewer('Lisa', 'Falina')
+
+first_student.rate_hw(first_lecturer, 'Python', 10)
+second_student.rate_hw(second_lecturer, 'Python', 10)
+
+first_mentor.rate_hw(first_student, 'Python', 10)
+second_mentor.rate_hw(second_student, 'Python', 10)
+
+first_lecturer.rate_hw(first_student, 'Python', 10)
+second_lecturer.rate_hw(second_student, 'Python', 10)
+
+print(first_student)
+print()
+print(second_student)
+print()
+print(first_mentor)
+print()
+print(second_mentor)
+print()
+print(first_lecturer)
+print()
+print(second_lecturer)
+print()
+print(first_reviewer)
+print()
+print(second_reviewer)
+print()
+print('Для студентов:', get_middle_marks_students([first_student, second_student], 'Python'))
+print('Для лекторов:', get_middle_marks_lectures([first_lecturer, second_lecturer], 'Python'))
